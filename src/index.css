@@ -565,8 +565,12 @@ p.m{color:var(--muted);margin:0 0 18px}
 .about #aText{
   font-size:1.02rem;
   line-height:1.95;
-  max-width:780px;
+  width:100%;
   margin-top:18px;
+  text-align:justify;
+  text-justify:inter-word;
+  hyphens:auto;
+  overflow-wrap:break-word;
 }
 .statsRow{
   display:grid;
@@ -1542,6 +1546,10 @@ footer{
     overflow-wrap:normal;
     word-break:normal;
   }
+}
+@media(max-width:640px){
+  /* Hindari celah antar kata terlalu lebar pada layar sempit */
+  .about #aText{text-align:left}
 }
 @media(max-width:580px){
   .pGrid,.cGrid,.caseGrid{grid-template-columns:1fr}
