@@ -1284,7 +1284,7 @@ footer{
   color:var(--text);
   max-width:660px;
   width:100%;
-  max-height:92vh;
+  max-height:calc(100vh - 2rem);
   border-radius:10px;
   overflow:hidden;
   display:flex;
@@ -1295,10 +1295,18 @@ footer{
   box-shadow:0 26px 64px rgba(0,0,0,.36);
 }
 #modal.open .box{transform:none}
+#modal #mc{
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+  max-height:calc(100vh - 2rem);
+  overflow:hidden;
+}
 .modalInner{
   display:flex;
   flex-direction:column;
-  max-height:92vh;
+  min-height:0;
+  max-height:calc(100vh - 2rem);
   animation:modalSlideIn .3s cubic-bezier(.22,1,.36,1) both;
 }
 .modalInner.fromPrev{animation:modalSlidePrev .3s cubic-bezier(.22,1,.36,1) both}
@@ -1343,12 +1351,24 @@ footer{
   pointer-events:none;
 }
 
-#modal .mb{padding:26px;overflow-y:auto}
+#modal .mb{
+  flex:1 1 auto;
+  min-height:0;
+  padding:26px;
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(15,23,42,.25) transparent;
+  scrollbar-gutter:stable;
+}
+#modal .mb::-webkit-scrollbar{width:6px}
+#modal .mb::-webkit-scrollbar-thumb{background:rgba(15,23,42,.25);border-radius:999px}
+#modal .mb::-webkit-scrollbar-track{background:transparent;margin:12px 0}
+#modal .modalHead{padding-right:56px}
 #modal h3{font-size:1.25rem;margin:0 0 12px}
 #mx{
   position:absolute;
-  top:12px;right:12px;
-  z-index:6;
+  top:16px;right:16px;
+  z-index:10;
   width:34px;height:34px;
   border:0;
   border-radius:50%;
@@ -1402,11 +1422,15 @@ footer{
 .caseItem p{margin:0;font-size:13.5px;line-height:1.65;color:#475569}
 .modalActions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 .modalNav{
+  position:sticky;
+  bottom:0;
+  z-index:2;
+  background:#ffffff;
   display:flex;
   align-items:center;
   justify-content:space-between;
   margin-top:22px;
-  padding-top:16px;
+  padding:14px 0 8px;
   border-top:1px solid var(--line);
   font:500 12px Poppins,sans-serif;
   color:var(--muted);
@@ -1557,6 +1581,17 @@ footer{
   .heroPhotoWrap{display:none}
   .fx-about .ab-rings{width:300px;height:300px;right:-110px}
   .fx-resume .c2,.fx-resume .c4{display:none}
+}
+/* Modal lebih ringkas pada layar pendek (tanpa mengubah ukuran font) */
+@media(max-height:700px){
+  #modal .mb{padding:18px 22px}
+  #modal #mc,#modal .box,.modalInner{max-height:calc(100vh - 1.25rem)}
+  #modal .modalHead{padding-right:52px}
+  .modalMeta{margin-bottom:10px}
+  .caseGrid{gap:8px;margin:10px 0 4px}
+  .caseItem{padding:9px 12px}
+  .modalActions{margin-top:12px}
+  .modalNav{margin-top:14px;padding:10px 0 6px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}

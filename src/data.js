@@ -49,6 +49,45 @@ export const DATA = {
   */
   projects: [
     {
+      name: "freshmeat-ai",
+      github: "https://github.com/ayubwicak/freshmeat-ai",
+      lang: "JavaScript",
+      desc: "Sistem inspeksi kesegaran daging berbasis computer vision (CIELAB + GLCM) dengan estimasi masa simpan, dilengkapi dashboard React dan backend FastAPI.",
+      stars: 0,
+      forks: 0,
+      live: "",
+      problem: "Penilaian kesegaran daging umumnya masih bergantung pada pengamatan manual yang subjektif, sehingga sulit mendeteksi daging menurun kualitas, gelonggongan, atau busuk secara konsisten. Proyek ini membantu menghasilkan penilaian yang objektif dan terdokumentasi.",
+      process: "Membangun pipeline computer vision dengan segmentasi ROI sadar-marbling, ekstraksi fitur warna CIELAB dan tekstur GLCM, serta aturan penolakan otomatis untuk estimasi TVB-N, grade A/B/Reject, dan masa simpan. Disusun sebagai monorepo dengan frontend React 19 + Vite + Tailwind, backend FastAPI + OpenCV + SQLite, pengujian otomatis (pytest), CI, dan deployment Docker/Nginx.",
+      role: "Full-Stack Developer & Computer Vision Engineer",
+      result: "Aplikasi inspeksi lengkap dengan dashboard interaktif, riwayat audit tersimpan, ekspor JSON, dan cetak sertifikat. Tersedia analisis lokal di browser sebagai cadangan jika server tidak aktif."
+    },
+    {
+      name: "exam-cheating-detection-ml",
+      github: "https://github.com/ayubwicak/exam-cheating-detection-ml",
+      lang: "Python",
+      desc: "Sistem machine learning untuk mendeteksi indikasi kecurangan pada ujian secara otomatis, sebagai alat bantu pengawas untuk menjaga integritas penilaian.",
+      stars: 0,
+      forks: 0,
+      live: "",
+      problem: "Pengawasan ujian secara manual memakan banyak tenaga dan sulit menjangkau banyak peserta sekaligus. Proyek ini dibuat untuk membantu pengawas menandai perilaku mencurigakan lebih cepat dan konsisten.",
+      process: "Mengumpulkan dan membersihkan data, melatih serta membandingkan beberapa model klasifikasi, lalu mengevaluasinya pada data uji yang terpisah agar hasilnya tidak bias.",
+      role: "Machine Learning Engineer",
+      result: "Model yang mampu membedakan perilaku wajar dan mencurigakan, dievaluasi pada data yang belum pernah dilihat model, dan siap dikembangkan lebih lanjut."
+    },
+    {
+      name: "fake-news-detector",
+      github: "https://github.com/ayubwicak/fake-news-detector",
+      lang: "Python",
+      desc: "Aplikasi web machine learning end-to-end yang mengklasifikasikan artikel berita sebagai Real atau Fake dengan akurasi 97,52%, dilengkapi Explainable AI dan loop umpan balik manusia.",
+      stars: 0,
+      forks: 0,
+      live: "",
+      problem: "Berita palsu menyebar cepat dan sulit diverifikasi secara manual. Proyek ini dibuat untuk membantu proses verifikasi awal secara otomatis, dengan hasil yang bisa dijelaskan dan diaudit.",
+      process: "Melatih model pada 40.449 artikel berita dengan pipeline bebas kebocoran data (split dulu, TF-IDF dan SMOTETomek hanya pada data latih), membandingkan beberapa model lewat cross-validation, lalu membangun REST API Flask dan dashboard web dengan 19 pengujian otomatis.",
+      role: "Machine Learning Engineer & Full-Stack Developer",
+      result: "Akurasi 97,52% dan ROC-AUC 0,9948 pada 8.091 artikel uji, dengan penjelasan token berpengaruh (XAI) di setiap prediksi dan siap deploy lewat Docker."
+    },
+    {
       name: "toko-online-modern",
       github: "https://github.com/username/toko-online-modern",
       lang: "JavaScript",

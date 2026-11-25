@@ -32,6 +32,16 @@ export default function Modal({ modal, onClose, onNavigate }) {
     if (open) document.getElementById('mx')?.focus();
   }, [open]);
 
+  /* Kunci scroll halaman saat modal terbuka */
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
+
   let content = null;
 
   if (open && modal.mode === 'gh-detail' && projects.length) {
@@ -58,7 +68,7 @@ export default function Modal({ modal, onClose, onNavigate }) {
           >
             <Icon name="github" />
           </div>
-          <div>
+          <div className="modalHead">
             <span className="tag" style={{ margin: '0 0 4px' }}>Repositori GitHub</span>
             <h3 style={{ margin: 0 }}>{p.name}</h3>
           </div>
@@ -101,7 +111,7 @@ export default function Modal({ modal, onClose, onNavigate }) {
             className="btn btnDark btnSm"
             href={repoHref}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             Buka di GitHub ↗
           </a>
