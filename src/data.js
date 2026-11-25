@@ -9,16 +9,16 @@ export const DATA = {
   name: "Ayub Wicaksono",
   role: "Web Developer.",
   // Daftar peran yang bergantian diketik halus di Hero (boleh diisi 1 atau lebih)
-  roles: ["Software Developer.", "Software Testing."],
-  sub: "Saya membangun website yang cepat, rapi, dan mudah dipakai untuk bisnis dan komunitas.",
+  roles: ["Software Developer.", "Software Testing.", "UI/UX."],
+  sub: "Penguji perangkat lunak yang berfokus pada kode bersih, bebas bug, dan pengalaman pengguna yang mulus.",
   photo: "", // Contoh: "assets/foto-profil.jpg" atau URL gambar potret 3:4
   cv: "#",   // Contoh: "assets/CV-Nama-Anda.pdf"
 
   // --- 2. Bagian Tentang Saya & 3 Angka Ringkasan ---
-  aboutTitle: "Web Developer independen yang kreatif",
-  about: "Tulis ringkasan latar belakang Anda: dari mana Anda berasal, apa yang membuat Anda tertarik pada bidang ini, dan apa yang ingin Anda capai bersama klien atau tim.",
+  aboutTitle: "Software Developer independen yang kreatif",
+  about: "Saya adalah Software Developer yang berfokus pada pengembangan aplikasi web menggunakan HTML, CSS, JavaScript, React, Tailwind CSS, Bootstrap, PHP, Laravel, dan Python. Saya memiliki pengetahuan dalam REST API, MySQL, dan PostgreSQL, serta sedang mendalami Software Testing & Quality Assurance. Saya senang mempelajari teknologi baru, menyelesaikan tantangan teknis, dan mengembangkan solusi digital yang fungsional serta mudah digunakan.",
   stats: [
-    { value: 3, suffix: "+", label: "Tahun Pengalaman" },
+    { value: 1, suffix: "+", label: "Tahun Pengalaman" },
     { value: 6, suffix: "+", label: "Proyek GitHub" },
     { value: 4, suffix: "",  label: "Sertifikasi Resmi" }
   ],
