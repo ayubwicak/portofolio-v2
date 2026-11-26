@@ -19,7 +19,7 @@ export default function Modal({ modal, onClose, onNavigate }) {
       if (modal.mode === 'gh-detail') {
         if (e.key === 'ArrowLeft') onNavigate(modal.index - 1, 'prev');
         if (e.key === 'ArrowRight') onNavigate(modal.index + 1, 'next');
-      } else if (modal.mode === 'cert-detail') {
+      } else if (modal.mode === 'cert-detail' && certificates.length > 1) {
         if (e.key === 'ArrowLeft') onNavigate(modal.index - 1, 'prev');
         if (e.key === 'ArrowRight') onNavigate(modal.index + 1, 'next');
       }
@@ -30,6 +30,16 @@ export default function Modal({ modal, onClose, onNavigate }) {
 
   useEffect(() => {
     if (open) document.getElementById('mx')?.focus();
+  }, [open]);
+
+  /* Kunci scroll halaman saat modal terbuka */
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previous;
+    };
   }, [open]);
 
   let content = null;
@@ -58,9 +68,9 @@ export default function Modal({ modal, onClose, onNavigate }) {
           >
             <Icon name="github" />
           </div>
-          <div>
+          <div className="modalHead">
             <span className="tag" style={{ margin: '0 0 4px' }}>Repositori GitHub</span>
-            <h3 style={{ margin: 0 }}>{p.name}</h3>
+            <h3 className="ghDetailTitle" style={{ margin: 0 }}>{p.name}</h3>
           </div>
         </div>
         <div className="modalMeta">
@@ -101,7 +111,7 @@ export default function Modal({ modal, onClose, onNavigate }) {
             className="btn btnDark btnSm"
             href={repoHref}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             Buka di GitHub ↗
           </a>
@@ -137,13 +147,13 @@ export default function Modal({ modal, onClose, onNavigate }) {
     content = (
       <>
         <div
-          className={`mi${zoomed ? ' zoomed' : ''}`}
+          className={`mi${zoomed ? ' zoomed' : ''}${c.portrait ? ' portrait' : ''}`}
           id="certZoomBox"
           title="Klik untuk memperbesar atau memperkecil"
           onClick={() => setZoomed((z) => !z)}
         >
           <div className="zoomTarget">
-            <CertThumb cert={c} index={idx} />
+            <CertThumb cert={c} index={idx} showImage />
           </div>
           <span className="zoomBadge" id="zoomBadge">
             {zoomed ? 'Klik untuk Zoom Out' : 'Klik untuk Zoom In'}
@@ -153,27 +163,42 @@ export default function Modal({ modal, onClose, onNavigate }) {
           <span className="tag">{c.category || 'Sertifikat'}</span>
           <h3>{c.title}</h3>
           <div className="modalMeta">
-            <span className="pill">Penerbit: {c.issuer}</span>
+            <span className="pill">{c.issuerLabel || 'Penerbit'}: {c.issuerShort || c.issuer}</span>
             {c.date && <span className="pill">Tahun: {c.date}</span>}
+            {c.project && <span className="pill">Proyek: {c.projectShort || c.project}</span>}
+            {c.validUntil && <span className="pill">Berlaku hingga: {c.validUntil}</span>}
+            {c.credentialId && <span className="pill">ID: {c.credentialId}</span>}
           </div>
-          {c.link && (
+          {(c.credentialUrl || c.link) && (
             <div className="modalActions">
               <a
                 className="btn btnDark btnSm"
-                href={c.link}
+                href={c.credentialUrl || c.link}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
               >
-                Verifikasi Kredensial ↗
+                Verifikasi Sertifikat ↗
+              </a>
+            </div>
+          )}
+          {c.projectUrl && (
+            <div className="modalActions">
+              <a
+                className="btn btnDark btnSm"
+                href={c.projectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Lihat Proyek ↗
               </a>
             </div>
           )}
           <div className="modalNav">
-            <button type="button" onClick={() => onNavigate(idx - 1, 'prev')}>
+            <button type="button" disabled={total <= 1} onClick={() => onNavigate(idx - 1, 'prev')}>
               ← Sebelumnya
             </button>
             <span>{idx + 1} / {total}</span>
-            <button type="button" onClick={() => onNavigate(idx + 1, 'next')}>
+            <button type="button" disabled={total <= 1} onClick={() => onNavigate(idx + 1, 'next')}>
               Berikutnya →
             </button>
           </div>

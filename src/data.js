@@ -3,6 +3,44 @@
    Semua konten halaman — termasuk daftar Proyek GitHub dan Sertifikat —
    dikelola langsung dari kode ini agar aman dan tidak bisa diubah pengunjung.
 ============================================================================ */
+
+/* Data sertifikat didefinisikan sekali di sini, lalu dipakai oleh grid, filter,
+   modal, dan angka statistik agar semuanya selalu sinkron. */
+const CERTIFICATES = [
+  {
+    title: "Anugerah Gangsa (Juara 3), IPEC'26 Penyertaan Antarabangsa",
+    issuer: "Kolej Komuniti Temerloh & Universitas Teknologi Digital Indonesia",
+    issuerShort: "Kolej Komuniti Temerloh & UTDI",
+    issuerLabel: "Penyelenggara",
+    category: "Penghargaan",
+    date: "2026",
+    issueDate: "12 Oktober 2026",
+    type: "award",
+    label: "Anugerah",
+    docType: "Sijil Anugerah Khas, Penyertaan Antarabangsa (Innovative Product Exhibition and Competition 2026)",
+    project: "QR TRACE: Platform Paspor Digital dan Ketertelusuran Produk Kayu untuk UMKM",
+    projectShort: "QR TRACE",
+    projectUrl: "https://github.com/ayubwicak/QR-TRACE-Digital-Product-Traceability-System",
+    venue: "Kolej Komuniti Temerloh, Malaysia",
+    signedBy: "Mohd Ramadan bin Mohd Khalid, Pengarah Kolej Komuniti Temerloh",
+    portrait: true,
+    img: "/certificates/ipec26-anugerah-gangsa.png"
+  },
+  {
+    title: "Spec-Driven Development dengan Kiro",
+    issuer: "Dicoding Indonesia",
+    category: "AI Dev",
+    date: "2026",
+    issueDate: "15 Oktober 2026",
+    validUntil: "15 Okt 2029",
+    credentialId: "JMZVL35OOXN9",
+    duration: "10 jam",
+    link: "https://www.dicoding.com/certificates/JMZVL35OOXN9",
+    credentialUrl: "https://www.dicoding.com/certificates/JMZVL35OOXN9",
+    img: "/certificates/kiro-spec-driven-development.png"
+  }
+];
+
 export const DATA = {
   // --- 1. Profil Utama & Hero ---
   brand: "Ayub",
@@ -13,6 +51,7 @@ export const DATA = {
   sub: "Penguji perangkat lunak yang berfokus pada kode bersih, bebas bug, dan pengalaman pengguna yang mulus.",
   photo: "", // Contoh: "assets/foto-profil.jpg" atau URL gambar potret 3:4
   cv: "#",   // Contoh: "assets/CV-Nama-Anda.pdf"
+  email: "ayubwicak27@gmail.com",
 
   // --- 2. Bagian Tentang Saya & 3 Angka Ringkasan ---
   aboutTitle: "Software Developer independen yang kreatif",
@@ -20,7 +59,7 @@ export const DATA = {
   stats: [
     { value: 1, suffix: "+", label: "Tahun Pengalaman" },
     { value: 6, suffix: "+", label: "Proyek GitHub" },
-    { value: 4, suffix: "",  label: "Sertifikasi Resmi" }
+    { value: CERTIFICATES.length, suffix: "",  label: "Sertifikasi & Penghargaan" }
   ],
   aboutFacts: {
     "Pendekatan kerja": "Memahami masalah terlebih dahulu, lalu menyusun solusi yang terstruktur dan mudah dipelihara.",
@@ -35,7 +74,7 @@ export const DATA = {
 
     {
       name: "nama-repositori-anda",
-      github: "https://github.com/username/nama-repositori-anda",
+      github: "https://github.com/ayubwicak/nama-repositori-anda",
       lang: "JavaScript",             // Bahasa utama (otomatis menjadi tombol filter)
       desc: "Deskripsi singkat proyek yang tampil di kartu.",
       stars: 12,
@@ -49,82 +88,82 @@ export const DATA = {
   */
   projects: [
     {
-      name: "toko-online-modern",
-      github: "https://github.com/username/toko-online-modern",
+      name: "QR-TRACE-Digital-Product-Traceability-System",
+      github: "https://github.com/ayubwicak/QR-TRACE-Digital-Product-Traceability-System",
       lang: "JavaScript",
-      desc: "Aplikasi katalog toko online responsif dengan keranjang belanja dinamis, filter produk, dan integrasi checkout WhatsApp.",
-      stars: 24,
-      forks: 6,
+      desc: "Sistem ketertelusuran produk digital untuk UMKM produk kayu: mencatat asal kayu, pemasok, tahapan produksi, dan mutu, lalu menampilkannya lewat paspor digital dan label QR.",
+      stars: 0,
+      forks: 0,
       live: "",
-      problem: "UMKM membutuhkan katalog digital ringan tanpa biaya langganan platform e-commerce bulanan.",
-      process: "Merancang antarmuka mobile-first, state keranjang belanja dengan Vanilla JS, dan format pesan checkout otomatis.",
-      role: "Full-Stack Developer & UI Designer",
-      result: "Waktu muat halaman di bawah 1 detik dan mempermudah pelanggan memesan langsung lewat WhatsApp."
+      problem: "UMKM produk kayu sulit membuktikan asal bahan baku dan proses pengerjaan kepada pembeli. Proyek ini dibuat untuk menghadirkan ketertelusuran dari bahan baku hingga produk jadi, sehingga produk lebih dipercaya dan mendukung kelestarian.",
+      process: "Membangun backend Express + PostgreSQL dan dashboard React (Vite). Data mencakup spesies dan asal kayu, pemasok, lot bahan, tahapan pengeringan dan pengerjaan, skor pemeriksaan mutu, rating karbon, dan tanda tangan hash per batch, dengan buku besar audit (audit trail) untuk setiap perubahan data. REST API menyediakan operasi lengkap untuk batch dan log audit.",
+      role: "Full-Stack Developer",
+      result: "Sistem paspor digital dengan label QR untuk setiap batch produk, dashboard operator, dan audit log tercatat di PostgreSQL. Meraih Anugerah Gangsa (Juara 3) di IPEC'26 Penyertaan Antarabangsa, Kolej Komuniti Temerloh, Oktober 2026."
     },
     {
-      name: "dashboard-analitik-ui",
-      github: "https://github.com/username/dashboard-analitik-ui",
-      lang: "React",
-      desc: "Dashboard pemantauan metrik harian berbasis React dengan komponen grafik modular, tabel interaktif, dan performa ringan.",
-      stars: 41,
-      forks: 11,
+      name: "rental-ps-system",
+      github: "https://github.com/ayubwicak/rental-ps-system",
+      lang: "JavaScript",
+      desc: "RentalKu, sistem penyewaan PlayStation berbasis Node.js + React untuk mengelola unit, sesi sewa, transaksi, reservasi, dan member dalam satu aplikasi.",
+      stars: 0,
+      forks: 0,
       live: "",
-      problem: "Tim operasional kesulitan membaca laporan harian yang tersebar di beberapa file spreadsheet terpisah.",
-      process: "Membangun komponen React reusable, filter rentang tanggal, dan visualisasi data yang responsif.",
-      role: "Frontend Engineer",
-      result: "Mempercepat proses pemantauan KPI harian tim hingga 50% lebih efisien."
+      problem: "Pengelolaan rental PlayStation yang masih manual mudah menimbulkan salah hitung durasi dan tarif, serta sulit melacak transaksi, reservasi, dan pelanggan tetap. Proyek ini dibuat agar operasional kasir lebih rapi, akurat, dan terdokumentasi.",
+      process: "Membangun backend Node.js + Express + SQLite dan frontend React (Vite) + Tailwind yang dijalankan dalam satu server. Fitur mencakup manajemen unit dan tarif, sesi berjalan dengan add-on snack/minuman, transaksi, reservasi, member dengan poin loyalti, serta login aman berbasis cookie httpOnly, pembatasan percobaan login, dan audit log aktivitas.",
+      role: "Full-Stack Developer",
+      result: "Aplikasi manajemen rental yang bisa dijalankan dengan satu perintah (npm start), dilengkapi dashboard dengan grafik, integrasi bot WhatsApp, dan siap di-deploy ke VPS."
     },
     {
-      name: "api-manajemen-inventori",
-      github: "https://github.com/username/api-manajemen-inventori",
-      lang: "TypeScript",
-      desc: "REST API manajemen stok gudang menggunakan Node.js & TypeScript lengkap dengan autentikasi JWT dan dokumentasi Swagger.",
-      stars: 19,
-      forks: 4,
+      name: "platform-zero-burning",
+      github: "https://github.com/ayubwicak/platform-zero-burning",
+      lang: "JavaScript",
+      desc: "Platform insentif zero burning untuk pencegahan karhutla: petani yang mengolah lahan tanpa membakar mengunggah foto berlokasi GPS, lalu diverifikasi berlapis oleh komunitas dan petugas untuk memperoleh insentif.",
+      stars: 0,
+      forks: 0,
       live: "",
-      problem: "Pencatatan stok keluar-masuk manual sering menimbulkan selisih data antar cabang gudang.",
-      process: "Menyusun skema database relasional, validasi input ketat dengan TypeScript, dan endpoint terstandar.",
-      role: "Backend Developer",
-      result: "Menghilangkan duplikasi pencatatan stok serta memudahkan integrasi dengan aplikasi web dan mobile."
+      problem: "Kebakaran hutan dan lahan sering dipicu pembakaran untuk membuka lahan pertanian. Proyek ini memberi petani insentif berupa benih, pupuk, atau alat pertanian agar beralih ke pengolahan lahan tanpa bakar, dengan bukti yang bisa diverifikasi.",
+      process: "Membangun monorepo dengan backend Node.js + Express + PostgreSQL, dashboard web React + Vite + Tailwind, dan skeleton aplikasi mobile Flutter. Fitur utama: registrasi dan login berbasis peran (petani, petugas, admin), pengelolaan lahan, unggah foto progres, verifikasi komunitas dan petugas, klaim insentif, katalog dan stok, distribusi, serta audit log.",
+      role: "Full-Stack Developer",
+      result: "Backend API inti dan dashboard web sudah terhubung dan berjalan, termasuk manajemen pengguna dan hak akses, pengelolaan katalog, serta audit log admin. Pengembangan berikutnya: aplikasi mobile, pengujian otomatis, dan deployment produksi."
     },
     {
-      name: "sistem-booking-klinik",
-      github: "https://github.com/username/sistem-booking-klinik",
-      lang: "PHP",
-      desc: "Aplikasi web penjadwalan kunjungan pasien dengan manajemen antrean real-time dan laporan rekap otomatis.",
-      stars: 15,
-      forks: 5,
+      name: "freshmeat-ai",
+      github: "https://github.com/ayubwicak/freshmeat-ai",
+      lang: "JavaScript",
+      desc: "Sistem inspeksi kesegaran daging berbasis computer vision (CIELAB + GLCM) dengan estimasi masa simpan, dilengkapi dashboard React dan backend FastAPI.",
+      stars: 0,
+      forks: 0,
       live: "",
-      problem: "Antrean pendaftaran pasien di meja resepsionis menumpuk pada jam sibuk pagi hari.",
-      process: "Membangun sistem reservasi slot dokter, notifikasi jadwal, dan panel admin klinik berbasis PHP.",
-      role: "Web Developer",
-      result: "Mengurangi waktu tunggu pendaftaran pasien hingga 40% dan merapikan arsip kunjungan."
+      problem: "Penilaian kesegaran daging umumnya masih bergantung pada pengamatan manual yang subjektif, sehingga sulit mendeteksi daging menurun kualitas, gelonggongan, atau busuk secara konsisten. Proyek ini membantu menghasilkan penilaian yang objektif dan terdokumentasi.",
+      process: "Membangun pipeline computer vision dengan segmentasi ROI sadar-marbling, ekstraksi fitur warna CIELAB dan tekstur GLCM, serta aturan penolakan otomatis untuk estimasi TVB-N, grade A/B/Reject, dan masa simpan. Disusun sebagai monorepo dengan frontend React 19 + Vite + Tailwind, backend FastAPI + OpenCV + SQLite, pengujian otomatis (pytest), CI, dan deployment Docker/Nginx.",
+      role: "Full-Stack Developer & Computer Vision Engineer",
+      result: "Aplikasi inspeksi lengkap dengan dashboard interaktif, riwayat audit tersimpan, ekspor JSON, dan cetak sertifikat. Tersedia analisis lokal di browser sebagai cadangan jika server tidak aktif."
     },
     {
-      name: "otomatisasi-rekap-csv",
-      github: "https://github.com/username/otomatisasi-rekap-csv",
+      name: "exam-cheating-detection-ml",
+      github: "https://github.com/ayubwicak/exam-cheating-detection-ml",
       lang: "Python",
-      desc: "Skrip CLI Python untuk membersihkan, menggabungkan, dan mengekspor laporan penjualan CSV menjadi ringkasan Excel.",
-      stars: 32,
-      forks: 9,
+      desc: "Sistem machine learning untuk mendeteksi indikasi kecurangan pada ujian secara otomatis, sebagai alat bantu pengawas untuk menjaga integritas penilaian.",
+      stars: 0,
+      forks: 0,
       live: "",
-      problem: "Penggabungan puluhan file laporan transaksi bulanan secara manual memakan waktu berjam-jam dan rawan salah ketik.",
-      process: "Membuat pipeline pembersihan data otomatis menggunakan Python dengan validasi kolom dan ekspor terformat.",
-      role: "Creator & Maintainer",
-      result: "Memangkas proses rekap bulanan dari 3 jam menjadi kurang dari 10 detik."
+      problem: "Pengawasan ujian secara manual memakan banyak tenaga dan sulit menjangkau banyak peserta sekaligus. Proyek ini dibuat untuk membantu pengawas menandai perilaku mencurigakan lebih cepat dan konsisten.",
+      process: "Mengumpulkan dan membersihkan data, melatih serta membandingkan beberapa model klasifikasi, lalu mengevaluasinya pada data uji yang terpisah agar hasilnya tidak bias.",
+      role: "Machine Learning Engineer",
+      result: "Model yang mampu membedakan perilaku wajar dan mencurigakan, dievaluasi pada data yang belum pernah dilihat model, dan siap dikembangkan lebih lanjut."
     },
     {
-      name: "starter-landing-page",
-      github: "https://github.com/username/starter-landing-page",
-      lang: "JavaScript",
-      desc: "Template landing page editorial yang cepat, ramah SEO, dan mudah dikustomisasi untuk portofolio maupun profil bisnis.",
-      stars: 28,
-      forks: 7,
+      name: "fake-news-detector",
+      github: "https://github.com/ayubwicak/fake-news-detector",
+      lang: "Python",
+      desc: "Aplikasi web machine learning end-to-end yang mengklasifikasikan artikel berita sebagai Real atau Fake dengan akurasi 97,52%, dilengkapi Explainable AI dan loop umpan balik manusia.",
+      stars: 0,
+      forks: 0,
       live: "",
-      problem: "Banyak template portofolio terlalu berat dengan dependensi besar sehingga skor Lighthouse rendah.",
-      process: "Merancang sistem grid responsif ringan tanpa framework berat, animasi halus, dan struktur kode tunggal yang rapi.",
-      role: "Author & Designer",
-      result: "Mencapai skor performa dan aksesibilitas tinggi di perangkat desktop maupun mobile."
+      problem: "Berita palsu menyebar cepat dan sulit diverifikasi secara manual. Proyek ini dibuat untuk membantu proses verifikasi awal secara otomatis, dengan hasil yang bisa dijelaskan dan diaudit.",
+      process: "Melatih model pada 40.449 artikel berita dengan pipeline bebas kebocoran data (split dulu, TF-IDF dan SMOTETomek hanya pada data latih), membandingkan beberapa model lewat cross-validation, lalu membangun REST API Flask dan dashboard web dengan 19 pengujian otomatis.",
+      role: "Machine Learning Engineer & Full-Stack Developer",
+      result: "Akurasi 97,52% dan ROC-AUC 0,9948 pada 8.091 artikel uji, dengan penjelasan token berpengaruh (XAI) di setiap prediksi dan siap deploy lewat Docker."
     }
   ],
 
@@ -144,105 +183,150 @@ export const DATA = {
       img: "assets/sertifikat-1.jpg" // Kosongkan "" untuk tampilan kartu editorial rapi
     },
   */
-  certificates: [
-    {
-      title: "Belajar Membuat Front-End Web untuk Pemula",
-      issuer: "Dicoding Indonesia",
-      category: "Web Dev",
-      date: "2024",
-      link: "",
-      img: ""
-    },
-    {
-      title: "Google UX Design Professional Certificate",
-      issuer: "Coursera / Google",
-      category: "UI/UX",
-      date: "2024",
-      link: "",
-      img: ""
-    },
-    {
-      title: "Cloud Practitioner Essentials (AWS)",
-      issuer: "Dicoding & AWS",
-      category: "Cloud",
-      date: "2023",
-      link: "",
-      img: ""
-    },
-    {
-      title: "Data Analytics & Visualization Foundations",
-      issuer: "Coursera",
-      category: "Data",
-      date: "2023",
-      link: "",
-      img: ""
-    }
-  ],
+  certificates: CERTIFICATES,
 
   // --- 5. Bagian Keahlian ---
-  skillsTitle: "Saya punya keahlian kuat di pengembangan web",
-  skillsText: "Ringkasan singkat tentang teknologi, perangkat, dan cara kerja yang biasa Anda gunakan dalam proyek.",
-  skills: [
-    { n: "Web Development", p: 90 },
-    { n: "UI Design", p: 80 },
-    { n: "Backend / API", p: 70 }
+  skillsTitle: "Membangun dan menguji perangkat lunak yang andal",
+  skillsText: "Keahlian yang saya pakai langsung dalam proyek nyata, dari antarmuka web, API, dan basis data hingga pengujian dan machine learning.",
+  skillGroups: [
+    {
+      title: "Frontend",
+      chips: ["HTML", "CSS", "JavaScript", "React", "Tailwind CSS", "Bootstrap"],
+      usedIn: [
+        { name: "Platform Zero Burning", repo: "platform-zero-burning" },
+        { name: "Rental PS System", repo: "rental-ps-system" },
+        { name: "FreshMeat AI", repo: "freshmeat-ai" }
+      ]
+    },
+    {
+      title: "Backend & API",
+      chips: ["Node.js", "Express", "PHP", "Laravel", "Python", "FastAPI", "REST API"],
+      usedIn: [
+        { name: "Platform Zero Burning", repo: "platform-zero-burning" },
+        { name: "Rental PS System", repo: "rental-ps-system" },
+        { name: "FreshMeat AI", repo: "freshmeat-ai" },
+        { name: "QR TRACE", repo: "QR-TRACE-Digital-Product-Traceability-System" }
+      ]
+    },
+    {
+      title: "Database",
+      chips: ["PostgreSQL", "MySQL", "SQLite"],
+      usedIn: [
+        { name: "QR TRACE", repo: "QR-TRACE-Digital-Product-Traceability-System" },
+        { name: "Platform Zero Burning", repo: "platform-zero-burning" },
+        { name: "Rental PS System", repo: "rental-ps-system" },
+        { name: "FreshMeat AI", repo: "freshmeat-ai" }
+      ]
+    },
+    {
+      title: "Software Testing & QA",
+      chips: ["Software Testing", "Quality Assurance", "pytest", "Pengujian API"],
+      usedIn: [
+        { name: "FreshMeat AI", repo: "freshmeat-ai" },
+        { name: "Fake News Detector (pengujian otomatis)", repo: "fake-news-detector" }
+      ]
+    },
+    {
+      title: "AI & Machine Learning",
+      chips: ["Python", "OpenCV", "Computer Vision", "scikit-learn"],
+      usedIn: [
+        { name: "Fake News Detector", repo: "fake-news-detector" },
+        { name: "FreshMeat AI", repo: "freshmeat-ai" },
+        { name: "Exam Cheating Detection", repo: "exam-cheating-detection-ml" }
+      ]
+    },
+    {
+      title: "Tools & Deployment",
+      chips: ["Git", "GitHub", "Docker", "Vite"],
+      usedIn: [{ name: "Semua proyek" }]
+    }
   ],
-  tools: ["HTML", "CSS", "JavaScript", "React", "Node.js", "Git", "Figma"],
   methods: ["Responsive design", "Agile", "Kolaborasi tim"],
 
   // --- 6. Bagian Resume (Pengalaman & Pendidikan) ---
   experience: [
     {
-      when: "2024 – sekarang",
-      what: "Web Developer",
-      where: "Perusahaan atau agensi digital",
-      desc: "Membangun antarmuka web responsif, meningkatkan kecepatan muat halaman, dan bekerja sama dengan tim desain."
+      when: "Agustus 2026 – Desember 2026",
+      what: "Magang di KWaS",
+      where: "",
+      desc: "Menjalani program magang di perusahaan KWaS, menerapkan keahlian pengembangan perangkat lunak dalam lingkungan kerja profesional."
     },
     {
-      when: "2022 – 2024",
-      what: "Freelance Web Developer",
-      where: "Proyek lepas",
-      desc: "Menyelesaikan berbagai website profil perusahaan, landing page, dan katalog produk untuk klien UMKM."
+      when: "Maret 2023 – September 2023",
+      what: "Pelayanan & Produksi Percetakan, Jan_D Print",
+      where: "",
+      desc: "Melayani pelanggan dan mengerjakan pesanan cutting sticker, stiker umum, stempel, akrilik, poster, serta banner/MMT, dari penerimaan pesanan hingga hasil jadi."
     }
   ],
   education: [
     {
-      when: "2020 – 2024",
-      what: "S1 Teknik Informatika",
-      where: "Nama kampus",
-      desc: "Fokus pada rekayasa perangkat lunak dan pengembangan aplikasi web."
-    }
-  ],
-  certs: [
+      when: "2024 – sekarang",
+      what: "S1 Informatika",
+      where: "",
+      desc: "Universitas Teknologi Digital Indonesia (UTDI). Sedang menempuh studi dengan fokus pada pengembangan perangkat lunak."
+    },
     {
-      when: "2023",
-      what: "Bootcamp Full-Stack Web Development",
-      where: "Penyelenggara sertifikasi",
-      desc: "Pelatihan intensif pengembangan aplikasi web modern dari frontend hingga REST API."
+      when: "2021 – 2024",
+      what: "SMKN 1 Jatiroto, Rekayasa Perangkat Lunak (RPL)",
+      where: "",
+      desc: "Menempuh pendidikan menengah kejuruan dengan jurusan Rekayasa Perangkat Lunak."
+    },
+    {
+      when: "2022 – 2023",
+      what: "Kelas Industri Crocodic, Web Developer",
+      where: "",
+      desc: "Program bootcamp kelas industri hasil kerja sama sekolah dengan perusahaan Crocodic. Mengikuti kelas Web Developer dan dinyatakan lulus bootcamp tingkat junior."
     }
   ],
 
-  // --- 7. Bagian Testimoni ---
+  // --- 7. Bagian Kutipan tokoh dunia software ---
   testimonials: [
     {
-      q: "Pengerjaan sangat rapi, komunikatif, dan hasilnya sesuai harapan. Website kami kini jauh lebih cepat dan mudah diakses dari ponsel.",
-      n: "Nama Klien",
-      r: "Pemilik Bisnis",
+      q: "Bicara itu murah. Tunjukkan kodenya.",
+      n: "Linus Torvalds",
+      r: "Pencipta Linux",
+      initial: "L",
       img: ""
     },
     {
-      q: "Sangat responsif saat revisi dan memberikan banyak masukan berguna untuk pengalaman pengguna.",
-      n: "Nama Rekan",
-      r: "Project Manager",
+      q: "Pengujian bisa menunjukkan adanya bug, tetapi tidak pernah bisa membuktikan bahwa bug itu tidak ada.",
+      n: "Edsger W. Dijkstra",
+      r: "Ilmuwan komputer",
+      initial: "E",
+      img: ""
+    },
+    {
+      q: "Buat agar berfungsi, buat agar benar, lalu buat agar cepat.",
+      n: "Kent Beck",
+      r: "Pencetus Extreme Programming",
+      initial: "K",
       img: ""
     }
   ],
 
   // --- 8. Bagian Kontak ---
   contact: [
-    { label: "Email", value: "email@contoh.com", href: "mailto:email@contoh.com" },
-    { label: "GitHub", value: "github.com/username", href: "https://github.com/" },
-    { label: "LinkedIn", value: "linkedin.com/in/username", href: "https://linkedin.com/" }
+    {
+      label: "Email",
+      value: "ayubwicak27@gmail.com",
+      href: "mailto:ayubwicak27@gmail.com",
+      ariaLabel: "Kirim email ke Ayub",
+      title: "Kirim email ke Ayub"
+    },
+    {
+      label: "GitHub",
+      value: "github.com/ayubwicak",
+      href: "https://github.com/ayubwicak",
+      ariaLabel: "Buka GitHub Ayub",
+      title: "Buka GitHub Ayub"
+    },
+    {
+      label: "LinkedIn",
+      value: "linkedin.com/in/ayub-wicaksono-474394402/",
+      href: "https://www.linkedin.com/in/ayub-wicaksono-474394402/",
+      ariaLabel: "Buka LinkedIn Ayub",
+      title: "Buka LinkedIn Ayub"
+    }
   ]
 };
 /* ======================== AKHIR BAGIAN EDIT DATA ========================= */
