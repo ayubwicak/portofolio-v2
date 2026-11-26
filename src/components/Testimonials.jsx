@@ -2,12 +2,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { DATA } from '../data';
 import { usePrefersReducedMotion } from '../shared';
 
-const testimonials = Array.isArray(DATA.testimonials) ? DATA.testimonials : [];
+const quotes = Array.isArray(DATA.testimonials) ? DATA.testimonials : [];
 const DURATION = 6000;
 
 export default function Testimonials() {
   const reduce = usePrefersReducedMotion();
-  const total = testimonials.length;
+  const total = quotes.length;
   const [cur, setCur] = useState(0);
   const [dir, setDir] = useState('next');
   const curRef = useRef(0);
@@ -83,8 +83,8 @@ export default function Testimonials() {
       </div>
       <div className="wrap tst">
         <div className="rv rv-l">
-          <span className="tag">Testimoni</span>
-          <h2 className="h">Kata mereka tentang saya</h2>
+          <span className="tag">Kutipan</span>
+          <h2 className="h">Prinsip yang saya pegang</h2>
         </div>
         <div className="rv rv-r" id="testiBox" style={{ '--d': '.1s' }}
           onPointerEnter={() => { paused.current = true; }}
@@ -103,17 +103,17 @@ export default function Testimonials() {
             }}
           >
             <div id="slides">
-              {testimonials.map((t, i) => (
+              {quotes.map((t, i) => (
                 <div
                   key={i}
                   className={`slide${i === cur ? ' on' : ''}${
                     i === cur && dir === 'prev' ? ' fromPrev' : ''
                   }`}
                 >
-                  <p className="m">"{t.q}"</p>
+                  <p className="m quoteText">"{t.q}"</p>
                   <div className="who">
                     <div className="av">
-                      {t.img ? <img src={t.img} alt={t.n} loading="lazy" /> : t.n?.[0]}
+                      {t.img ? <img src={t.img} alt={t.n} loading="lazy" /> : t.initial || t.n?.[0]}
                     </div>
                     <div>
                       <b>{t.n}</b>
@@ -130,12 +130,12 @@ export default function Testimonials() {
             </div>
           )}
           <div className="dots" id="dots" ref={dotsRef} onClick={onDotClick}>
-            {testimonials.map((_, i) => (
+            {quotes.map((_, i) => (
               <button
                 key={i}
                 type="button"
                 className={i === cur ? 'on' : ''}
-                aria-label={`Testimoni ${i + 1}`}
+                aria-label={`Kutipan ${i + 1}`}
               />
             ))}
             {total > 1 && (

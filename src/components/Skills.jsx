@@ -1,27 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { DATA } from '../data';
-import { useCountUp, useInView, usePrefersReducedMotion } from '../shared';
+import { usePrefersReducedMotion } from '../shared';
 
-function SkillBar({ skill }) {
-  const [ref, inView] = useInView();
-  const pct = useCountUp(skill.p, '%', 1150, inView);
-  return (
-    <div ref={ref} className="bar rv" data-target={skill.p}>
-      <div className="h2">
-        <span>{skill.n}</span>
-        <span className="pct">{pct}</span>
-      </div>
-      <div className="tr">
-        <div
-          className="fl"
-          style={{ '--w': `${skill.p}%`, width: inView ? `${skill.p}%` : 0 }}
-        />
-      </div>
-    </div>
-  );
-}
+const projects = Array.isArray(DATA.projects) ? DATA.projects : [];
+const groups = Array.isArray(DATA.skillGroups) ? DATA.skillGroups : [];
 
-export default function Skills() {
+export default function Skills({ onOpen }) {
   const reduce = usePrefersReducedMotion();
   const layerRef = useRef(null);
 
@@ -59,6 +43,16 @@ export default function Skills() {
     chip._t = setTimeout(() => chip.classList.remove('activeChip'), 900);
   };
 
+  /* Nama proyek yang cocok dengan data proyek menjadi tautan: gulir ke Proyek
+     lalu buka modal proyek terkait. Nama yang tidak ditemukan tetap teks biasa. */
+  const openUsed = (entry) => {
+    document
+      .getElementById('portfolio')
+      ?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    const index = projects.findIndex((p) => p.name === entry.repo);
+    if (index >= 0 && typeof onOpen === 'function') onOpen(index, 'next');
+  };
+
   return (
     <section id="skills">
       <div className="bg-fx fx-skills" aria-hidden="true">
@@ -73,33 +67,56 @@ export default function Skills() {
         </div>
       </div>
       <div className="wrap skills">
-        <div className="rv rv-l">
+        <header className="skillHead rv">
           <span className="tag">Keahlian</span>
           <h2 className="h" id="sTitle">{DATA.skillsTitle}</h2>
-          <p className="m" id="sText" style={{ marginTop: 14 }}>{DATA.skillsText}</p>
-          <div id="tools">
-            <h3 className="sh">Perangkat &amp; bahasa pemrograman</h3>
-            <div className="chips">
-              {(DATA.tools || []).map((tool, i) => (
-                <button key={i} type="button" className="chipBtn" onClick={onChipClick}>
-                  {tool}
-                </button>
-              ))}
-            </div>
-            <h3 className="sh">Metode kerja</h3>
-            <div className="chips">
-              {(DATA.methods || []).map((method, i) => (
-                <button key={i} type="button" className="chipBtn" onClick={onChipClick}>
-                  {method}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="rv rv-r" style={{ '--d': '.08s' }} id="bars">
-          {(DATA.skills || []).map((skill, i) => (
-            <SkillBar key={i} skill={skill} />
+          <p className="m" id="sText">{DATA.skillsText}</p>
+        </header>
+        <div className="skillGrid" id="skillGrid">
+          {groups.map((group, i) => (
+            <article
+              key={i}
+              className="skillCard rv rv-z"
+              style={{ '--d': `${(i % 3) * 0.07}s` }}
+            >
+              <h3 className="skillCardTitle">{group.title}</h3>
+              <div className="chips skillChips">
+                {(group.chips || []).map((chip, j) => (
+                  <button key={j} type="button" className="chipBtn" onClick={onChipClick}>
+                    {chip}
+                  </button>
+                ))}
+              </div>
+              <p className="skillUsed">
+                <span className="skillUsedLabel">Dipakai di:</span>{' '}
+                {(group.usedIn || []).map((entry, j) => {
+                  const linked = projects.some((p) => p.name === entry.repo);
+                  return linked ? (
+                    <button
+                      key={j}
+                      type="button"
+                      className="projectLink"
+                      onClick={() => openUsed(entry)}
+                    >
+                      {entry.name}
+                    </button>
+                  ) : (
+                    <span key={j} className="projectPlain">{entry.name}</span>
+                  );
+                })}
+              </p>
+            </article>
           ))}
+        </div>
+        <div className="skillMethods rv" id="tools">
+          <h3 className="sh">Metode kerja</h3>
+          <div className="chips">
+            {(DATA.methods || []).map((method, i) => (
+              <button key={i} type="button" className="chipBtn" onClick={onChipClick}>
+                {method}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>

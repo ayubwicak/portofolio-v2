@@ -98,7 +98,7 @@ function PortfolioApp() {
       <About />
       <Portfolio onOpen={openProject} />
       <Certificates onOpen={openCert} />
-      <Skills />
+      <Skills onOpen={openProject} />
       <Resume />
       <Testimonials />
       <CTA />

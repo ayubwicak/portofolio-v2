@@ -33,15 +33,7 @@ export function Icon({ name, style, className }) {
 
 export const LANG_COLORS = {
   JavaScript: '#f1e05a',
-  TypeScript: '#3178c6',
-  React: '#61dafb',
   Python: '#3572a5',
-  PHP: '#4f5d95',
-  HTML: '#e34c26',
-  CSS: '#563d7c',
-  Go: '#00add8',
-  Rust: '#dea584',
-  Java: '#b07219',
 };
 
 /* ---------- prefers-reduced-motion ---------- */

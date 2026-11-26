@@ -2,14 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import { DATA } from '../data';
 import { ICON_PATHS, useToast } from '../shared';
 
-const fallbackEmail = {
-  value: 'email@contoh.com',
-  href: 'mailto:email@contoh.com',
-};
+const contacts = Array.isArray(DATA.contact) ? DATA.contact : [];
+const emailAddr =
+  DATA.email || contacts.find((c) => c.label.toLowerCase() === 'email')?.value || '';
+const mailtoHref = 'mailto:' + emailAddr;
 
 export default function Contact() {
   const toast = useToast();
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState('');
   const resetTimer = useRef(null);
   const nameRef = useRef(null);
   const msgRef = useRef(null);
@@ -17,24 +18,35 @@ export default function Contact() {
 
   useEffect(() => () => clearTimeout(resetTimer.current), []);
 
-  const emailObj =
-    (DATA.contact || []).find((c) => c.href.startsWith('mailto:')) || fallbackEmail;
-  const emailAddr = emailObj.value || emailObj.href.replace(/^mailto:/i, '');
+  /* Fallback untuk browser lama tanpa Clipboard API. */
+  const legacyCopy = () => {
+    const ta = document.createElement('textarea');
+    ta.value = emailAddr;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    if (!ok) throw new Error('copy failed');
+  };
 
-  const copyEmail = () => {
+  const copyEmail = async () => {
     try {
-      const ta = document.createElement('textarea');
-      ta.value = emailAddr;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
+      if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(emailAddr);
+      else legacyCopy();
       toast('Email berhasil disalin: ' + emailAddr);
     } catch {
-      toast('Email: ' + emailAddr);
+      try {
+        legacyCopy();
+        toast('Email berhasil disalin: ' + emailAddr);
+      } catch {
+        toast('Email: ' + emailAddr);
+      }
     }
+    setError('');
     setCopied(true);
     clearTimeout(resetTimer.current);
     resetTimer.current = setTimeout(() => setCopied(false), 2000);
@@ -45,22 +57,31 @@ export default function Contact() {
     const nameVal = nameRef.current?.value.trim() || '';
     const msgVal = msgRef.current?.value.trim() || '';
     if (!nameVal || !msgVal) {
+      setError(
+        !nameVal && !msgVal
+          ? 'Isi nama dan pesan terlebih dahulu.'
+          : !nameVal
+            ? 'Isi nama terlebih dahulu.'
+            : 'Isi pesan terlebih dahulu.'
+      );
       const form = formRef.current;
       if (form) {
         form.classList.remove('shake');
         void form.offsetWidth;
         form.classList.add('shake');
       }
-      toast('Isi nama dan pesan terlebih dahulu');
       return;
     }
-    toast('Membuka aplikasi email…');
-    window.location.href =
-      emailObj.href +
+    setError('');
+    const subject = 'Pesan dari portofolio: ' + nameVal;
+    const href =
+      mailtoHref +
       '?subject=' +
-      encodeURIComponent('Pesan dari ' + nameVal) +
+      encodeURIComponent(subject) +
       '&body=' +
       encodeURIComponent(msgVal);
+    toast('Membuka aplikasi email…');
+    window.location.href = href;
   };
 
   return (
@@ -73,7 +94,7 @@ export default function Contact() {
             Terbuka untuk proyek lepas, kolaborasi produk digital, maupun peluang kerja penuh waktu.
           </p>
           <div className="ico" id="cList">
-            {(DATA.contact || []).map((c, i) => {
+            {contacts.map((c, i) => {
               const key = c.label.toLowerCase();
               const path = ICON_PATHS[key] || ICON_PATHS.link;
               const external = !c.href.startsWith('mailto:');
@@ -82,8 +103,9 @@ export default function Contact() {
                   key={i}
                   data-tip={c.label}
                   href={c.href}
-                  aria-label={c.label}
-                  {...(external ? { target: '_blank', rel: 'noopener' } : {})}
+                  aria-label={c.ariaLabel || c.label}
+                  title={c.title || c.label}
+                  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 >
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d={path} fill="currentColor" />
@@ -109,7 +131,9 @@ export default function Contact() {
                   </>
                 )}
               </svg>
-              <span id="copyLbl">{copied ? 'Tersalin!' : 'Salin Email'}</span>
+              <span id="copyLbl" aria-live="polite">
+                {copied ? 'Tersalin ✓' : 'Salin Email'}
+              </span>
             </button>
           </div>
         </div>
@@ -129,9 +153,14 @@ export default function Contact() {
             />
             <span className="fieldLine" aria-hidden="true" />
           </div>
-          <a id="send" className="btn btnDark" href="#" onClick={send}>
+          {error && (
+            <p className="formError" role="alert">
+              {error}
+            </p>
+          )}
+          <button id="send" type="button" className="btn btnDark" onClick={send}>
             Kirim lewat email <span className="arrSlide" aria-hidden="true">→</span>
-          </a>
+          </button>
         </div>
       </div>
     </section>
