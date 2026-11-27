@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { DATA } from '../data';
 import { ICON_PATHS, useToast } from '../shared';
+import Reveal from './Reveal';
 
 const contacts = Array.isArray(DATA.contact) ? DATA.contact : [];
 const emailAddr =
@@ -87,7 +88,7 @@ export default function Contact() {
   return (
     <section id="contact">
       <div className="wrap ct">
-        <div className="rv rv-l">
+        <Reveal variant="left">
           <span className="tag">Kontak</span>
           <h2 className="h">Hubungi saya</h2>
           <p className="m" style={{ marginTop: 14 }}>
@@ -136,8 +137,8 @@ export default function Contact() {
               </span>
             </button>
           </div>
-        </div>
-        <div className="rv rv-r" id="cForm" style={{ '--d': '.1s' }} ref={formRef}>
+        </Reveal>
+        <Reveal variant="right" id="cForm" delay={100} ref={formRef}>
           <div className="field">
             <label htmlFor="n">Nama</label>
             <input id="n" ref={nameRef} type="text" placeholder="Nama Anda" />
@@ -161,7 +162,7 @@ export default function Contact() {
           <button id="send" type="button" className="btn btnDark" onClick={send}>
             Kirim lewat email <span className="arrSlide" aria-hidden="true">→</span>
           </button>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

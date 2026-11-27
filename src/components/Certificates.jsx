@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { DATA } from '../data';
 import { movePill } from '../shared';
 import CertThumb from './CertThumb';
+import Reveal from './Reveal';
 
 const certificates = Array.isArray(DATA.certificates) ? DATA.certificates : [];
 
@@ -66,7 +67,7 @@ export default function Certificates({ onOpen }) {
         </div>
       </div>
       <div className="wrap">
-        <div className="pHead rv">
+        <Reveal className="pHead">
           <div>
             <span className="tag">Sertifikat</span>
             <h2 className="h">Sertifikasi &amp; pencapaian</h2>
@@ -85,15 +86,17 @@ export default function Certificates({ onOpen }) {
               </button>
             ))}
           </div>
-        </div>
+        </Reveal>
         <div className="cGrid" id="cGrid" ref={gridRef}>
           {certificates.map((cert, i) => {
             const category = cert.category || 'Lainnya';
             return (
-              <article
+              <Reveal
+                as="article"
                 key={i}
-                className="certCard rv rv-z"
-                style={{ '--d': `${(i % 3) * 0.08}s` }}
+                className="certCard"
+                variant="zoom"
+                delay={(i % 3) * 80}
                 data-c={category}
                 data-idx={i}
                 tabIndex={0}
@@ -117,7 +120,7 @@ export default function Certificates({ onOpen }) {
                     {cert.date ? ` • ${cert.date}` : ''}
                   </span>
                 </div>
-              </article>
+              </Reveal>
             );
           })}
         </div>

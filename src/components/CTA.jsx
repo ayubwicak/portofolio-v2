@@ -1,3 +1,5 @@
+import Reveal from './Reveal';
+
 export default function CTA() {
   return (
     <div className="cta" id="cta">
@@ -9,7 +11,7 @@ export default function CTA() {
           <i />
         </div>
       </div>
-      <div className="wrap rv rv-z">
+      <Reveal className="wrap" variant="zoom">
         <h2>Mari bekerja sama!</h2>
         <p>
           Punya proyek atau ide yang ingin diwujudkan? Jangan ragu untuk menghubungi saya.
@@ -17,7 +19,7 @@ export default function CTA() {
         <a className="btn btnWhite" href="#contact">
           Kirim pesan <span className="arrSlide" aria-hidden="true">→</span>
         </a>
-      </div>
+      </Reveal>
     </div>
   );
 }

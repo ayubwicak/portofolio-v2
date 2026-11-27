@@ -30,27 +30,7 @@ function PortfolioApp() {
     document.title = DATA.name + ' – ' + DATA.role;
   }, []);
 
-  /* Scroll reveal terarah (satu observer untuk semua elemen .rv) */
-  useEffect(() => {
-    const elements = [...document.querySelectorAll('.rv')];
-    if (!('IntersectionObserver' in window)) {
-      elements.forEach((el) => el.classList.add('in'));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.08, rootMargin: '0px 0px -20px 0px' }
-    );
-    elements.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
+  /* Scroll reveal ditangani useReveal.js per elemen (threshold 0.15, unobserve sekali). */
 
   /* Navbar solid & progress bar */
   useEffect(() => {

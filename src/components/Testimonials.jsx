@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { DATA } from '../data';
 import { usePrefersReducedMotion } from '../shared';
+import Reveal from './Reveal';
 
 const quotes = Array.isArray(DATA.testimonials) ? DATA.testimonials : [];
 const DURATION = 6000;
@@ -82,11 +83,11 @@ export default function Testimonials() {
         <span className="ts-quote">&ldquo;</span>
       </div>
       <div className="wrap tst">
-        <div className="rv rv-l">
+        <Reveal variant="left">
           <span className="tag">Kutipan</span>
           <h2 className="h">Prinsip yang saya pegang</h2>
-        </div>
-        <div className="rv rv-r" id="testiBox" style={{ '--d': '.1s' }}
+        </Reveal>
+        <Reveal variant="right" id="testiBox" delay={100}
           onPointerEnter={() => { paused.current = true; }}
           onPointerLeave={() => {
             paused.current = false;
@@ -149,7 +150,7 @@ export default function Testimonials() {
               </div>
             )}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

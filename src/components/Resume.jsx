@@ -1,22 +1,23 @@
 import { DATA } from '../data';
+import Reveal from './Reveal';
 
 const Timeline = ({ items }) =>
   items.map((item, i) => (
-    <article className="rv" key={i} style={{ '--d': `${i * 0.08}s` }}>
+    <Reveal as="article" key={i} delay={i * 80}>
       <time>{item.when}</time>
       <h3>{item.what}</h3>
       <p>{[item.where, item.desc].filter(Boolean).join('. ')}</p>
-    </article>
+    </Reveal>
   ));
 
 export default function Resume() {
   return (
     <section id="resume">
       <div className="wrap resumeWrap">
-        <div className="rv">
+        <Reveal>
           <span className="tag">Resume</span>
           <h2 className="h">Pengalaman &amp; pendidikan</h2>
-        </div>
+        </Reveal>
         <div className="res">
           <div>
             <h3>Pengalaman &amp; magang</h3>

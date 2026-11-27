@@ -85,11 +85,11 @@ export function useCountUp(target, suffix = '', duration = 1100, start = false) 
   const [value, setValue] = useState(0);
   const reduce = usePrefersReducedMotion();
   useEffect(() => {
-    if (!start) return;
     if (reduce) {
       setValue(target);
       return;
     }
+    if (!start) return;
     let raf;
     const t0 = performance.now();
     const tick = (t) => {

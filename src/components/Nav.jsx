@@ -63,10 +63,16 @@ export default function Nav() {
   return (
     <nav id="navbar">
       <div className="wrap">
-        <a className="logo" href="#home" id="logo">
+        <a
+          className="logo navEnter"
+          href="#home"
+          id="logo"
+          aria-label="Ayub Wicaksono, kembali ke beranda"
+        >
           {DATA.brand}
+          <span className="logo-dot" aria-hidden="true">.</span>
         </a>
-        <div className="navRight">
+        <div className="navRight navEnter" style={{ '--reveal-delay': '80ms' }}>
           <div className="navMenuWrap">
             <ul
               id="menu"
