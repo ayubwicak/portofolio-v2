@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { DATA } from '../data';
 import { Icon, LANG_COLORS, movePill } from '../shared';
+import Reveal from './Reveal';
 
 const projects = Array.isArray(DATA.projects) ? DATA.projects : [];
 
@@ -55,7 +56,7 @@ export default function Portfolio({ onOpen }) {
         <span className="pt-dots" />
       </div>
       <div className="wrap">
-        <div className="pHead rv">
+        <Reveal className="pHead">
           <div>
             <span className="tag">Proyek GitHub</span>
             <h2 className="h">Karya terbaru</h2>
@@ -74,16 +75,18 @@ export default function Portfolio({ onOpen }) {
               </button>
             ))}
           </div>
-        </div>
+        </Reveal>
         <div className="pGrid" id="pGrid" ref={gridRef}>
           {projects.map((project, i) => {
             const lang = project.lang || 'Lainnya';
             const repoHref = project.github || project.repoUrl || '#';
             return (
-              <article
+              <Reveal
+                as="article"
                 key={i}
-                className="ghCard rv rv-z"
-                style={{ '--d': `${(i % 3) * 0.08}s` }}
+                className="ghCard"
+                variant="zoom"
+                delay={(i % 3) * 80}
                 data-c={lang}
                 data-idx={i}
                 tabIndex={0}
@@ -131,7 +134,7 @@ export default function Portfolio({ onOpen }) {
                     GitHub ↗
                   </a>
                 </div>
-              </article>
+              </Reveal>
             );
           })}
         </div>

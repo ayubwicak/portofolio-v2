@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { DATA } from '../data';
 import { usePrefersReducedMotion } from '../shared';
+import Reveal from './Reveal';
 
 const projects = Array.isArray(DATA.projects) ? DATA.projects : [];
 const groups = Array.isArray(DATA.skillGroups) ? DATA.skillGroups : [];
@@ -67,17 +68,19 @@ export default function Skills({ onOpen }) {
         </div>
       </div>
       <div className="wrap skills">
-        <header className="skillHead rv">
+        <Reveal as="header" className="skillHead">
           <span className="tag">Keahlian</span>
           <h2 className="h" id="sTitle">{DATA.skillsTitle}</h2>
           <p className="m" id="sText">{DATA.skillsText}</p>
-        </header>
+        </Reveal>
         <div className="skillGrid" id="skillGrid">
           {groups.map((group, i) => (
-            <article
+            <Reveal
+              as="article"
               key={i}
-              className="skillCard rv rv-z"
-              style={{ '--d': `${(i % 3) * 0.07}s` }}
+              className="skillCard"
+              variant="zoom"
+              delay={(i % 3) * 70}
             >
               <h3 className="skillCardTitle">{group.title}</h3>
               <div className="chips skillChips">
@@ -105,10 +108,10 @@ export default function Skills({ onOpen }) {
                   );
                 })}
               </p>
-            </article>
+            </Reveal>
           ))}
         </div>
-        <div className="skillMethods rv" id="tools">
+        <Reveal className="skillMethods" id="tools">
           <h3 className="sh">Metode kerja</h3>
           <div className="chips">
             {(DATA.methods || []).map((method, i) => (
@@ -117,7 +120,7 @@ export default function Skills({ onOpen }) {
               </button>
             ))}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

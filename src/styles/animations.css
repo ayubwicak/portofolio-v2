@@ -1,0 +1,87 @@
+/* ==========================================================================
+   ANIMASI HALUS & REVEAL TERARAH
+   --------------------------------------------------------------------------
+   - Hanya memakai transform dan opacity.
+   - Durasi 400–700ms, easing cubic-bezier(0.22, 1, 0.36, 1).
+   - Konten tidak pernah disembunyikan sebelum JS menandai dokumen
+     (.js-ready ditambahkan di main.jsx), sehingga fallback no-JS tetap tampil.
+   - will-change dilepas setelah transisi selesai (lihat useReveal.js).
+   ========================================================================== */
+:root {
+  --anim-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-duration: 620ms;
+  --reveal-distance: 24px;
+}
+
+/* ---------- Scroll reveal (sekali per elemen) ---------- */
+.js-ready .reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-distance), 0);
+  will-change: transform, opacity;
+  transition:
+    opacity var(--reveal-duration) var(--anim-ease),
+    transform var(--reveal-duration) var(--anim-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js-ready .reveal--left {
+  transform: translate3d(-30px, 0, 0);
+}
+.js-ready .reveal--right {
+  transform: translate3d(30px, 0, 0);
+}
+.js-ready .reveal--zoom {
+  transform: scale(0.94) translate3d(0, 12px, 0);
+}
+.js-ready .reveal.reveal--visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Entrance navbar (sekali saat halaman dimuat) ---------- */
+@keyframes navEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.js-ready .navEnter {
+  animation: navEnter var(--reveal-duration) var(--anim-ease) backwards;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+/* ---------- Hero: tombol masuk setelah teks ketik pertama ---------- */
+.js-ready .heroBtns {
+  animation: heroFade var(--reveal-duration) var(--anim-ease) 0.5s backwards;
+}
+
+/* ---------- Layar sempit: reveal vertikal agar tidak memicu scroll horizontal ---------- */
+@media (max-width: 1100px) {
+  .js-ready .reveal--left,
+  .js-ready .reveal--right {
+    transform: translate3d(0, 20px, 0);
+  }
+}
+
+/* ---------- Hormati prefers-reduced-motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .js-ready .reveal,
+  .js-ready .reveal--left,
+  .js-ready .reveal--right,
+  .js-ready .reveal--zoom {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    transition-delay: 0ms !important;
+    will-change: auto !important;
+  }
+  .js-ready .navEnter,
+  .js-ready .heroBtns {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

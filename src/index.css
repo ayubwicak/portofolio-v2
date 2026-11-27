@@ -15,6 +15,8 @@
   --on-ink:#ffffff;
   --font-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --font-heading:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-logo:"Space Grotesk","Poppins",system-ui,sans-serif;
+  --accent:#2b6cb0;
   color-scheme:light;
   box-sizing:border-box;
 }
@@ -24,9 +26,10 @@
    ========================================================================== */
 html{
   scroll-behavior:smooth;
-  scroll-padding-top:76px;
   background:var(--bg);
 }
+/* Offset setinggi navbar saat menuju anchor, mati di reduced-motion. */
+section[id],header[id],#cta{scroll-margin-top:76px}
 *,*::before,*::after{box-sizing:border-box}
 body{
   margin:0;
@@ -90,17 +93,27 @@ nav.sc{
 nav.sc .wrap{height:68px}
 
 .logo{
-  font-family:"Brush Script MT","Segoe Script",cursive;
-  font-style:italic;
+  display:inline-flex;
+  align-items:baseline;
+  font-family:var(--font-logo);
   font-weight:700;
-  font-size:1.95rem;
+  font-size:1.75rem;
+  line-height:1;
+  letter-spacing:-.02em;
   text-decoration:none;
-  color:#ffffff;
-  letter-spacing:.01em;
-  transition:color .3s ease,transform .25s ease;
+  /* Sama dengan warna tautan navbar: putih di atas hero, navy saat di-scroll. */
+  color:var(--on-ink);
+  transition:color .3s ease,opacity .25s ease;
 }
-.logo:hover{transform:translateY(-1px)}
-nav.sc .logo{color:#111827}
+.logo:hover{opacity:.85}
+.logo:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+.logo-dot{
+  color:var(--accent);
+  display:inline-block;
+  transition:transform .25s cubic-bezier(.22,1,.36,1);
+}
+.logo:hover .logo-dot{transform:translateX(3px)}
+nav.sc .logo{color:var(--navy-2)}
 
 .navRight{display:flex;align-items:center;gap:18px}
 .navMenuWrap{position:relative;display:flex;align-items:center}
@@ -403,7 +416,7 @@ h2.h::after{
   transform:scaleX(.2);
   transition:transform .7s cubic-bezier(.22,1,.36,1) .15s;
 }
-.rv.in h2.h::after{transform:scaleX(1)}
+.reveal.reveal--visible h2.h::after{transform:scaleX(1)}
 p.m{color:var(--muted);margin:0 0 18px}
 
 /* ==========================================================================
@@ -1502,18 +1515,8 @@ footer{
 #toast.show{opacity:1;transform:translate(-50%,0)}
 
 /* ==========================================================================
-   20. SCROLL REVEAL TERARAH
+   20. SCROLL REVEAL — lihat src/styles/animations.css & src/hooks/useReveal.js
    ========================================================================== */
-.js-ready .rv{
-  opacity:0;
-  transform:translateY(24px);
-  transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1);
-  transition-delay:var(--d,0s);
-}
-.js-ready .rv.rv-l{transform:translateX(-30px)}
-.js-ready .rv.rv-r{transform:translateX(30px)}
-.js-ready .rv.rv-z{transform:scale(.94) translateY(12px)}
-.js-ready .rv.in{opacity:1;transform:none}
 
 /* ==========================================================================
    21. KEYFRAMES ANIMASI
@@ -1549,10 +1552,6 @@ footer{
 /* ==========================================================================
    22. RESPONSIF TABLET & MOBILE + PREFERS-REDUCED-MOTION
    ========================================================================== */
-@media(max-width:1100px){
-  /* Cegah reveal horizontal memicu scroll di viewport menengah */
-  .js-ready .rv.rv-l,.js-ready .rv.rv-r{transform:translateY(20px)}
-}
 @media(max-width:920px){
   nav ul{
     display:none;
@@ -1579,8 +1578,6 @@ footer{
   .fct,.tst,.ct{grid-template-columns:1fr;gap:32px}
   .pGrid,.cGrid{grid-template-columns:1fr 1fr}
   section{padding:78px 0}
-  /* Reveal vertikal di layar sempit agar tidak memicu scroll horizontal */
-  .js-ready .rv.rv-l,.js-ready .rv.rv-r{transform:translateY(20px)}
 }
 @media(max-width:768px){
   /* Nama boleh turun baris, tetapi hanya di sela kata (AYUB / WICAKSONO) */
@@ -1626,7 +1623,8 @@ footer{
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   .fx-skills .sk-layer{transform:none!important}
-  .js-ready .rv{opacity:1!important;transform:none!important}
+  .js-ready .reveal{opacity:1!important;transform:none!important;will-change:auto!important}
   h2.h::after{transform:scaleX(1)!important}
   html{scroll-behavior:auto}
+  section[id],header[id],#cta{scroll-margin-top:0}
 }

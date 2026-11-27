@@ -1,5 +1,6 @@
 import { DATA } from '../data';
 import { useCountUp, useInView } from '../shared';
+import Reveal from './Reveal';
 
 function Stat({ item, start }) {
   const display = useCountUp(Number(item.value || 0), item.suffix || '', 1100, start);
@@ -32,22 +33,22 @@ export default function About() {
         </div>
       </div>
       <div className="wrap about">
-        <div className="rv">
+        <Reveal>
           <span className="tag">Tentang saya</span>
           <h2 className="h" id="aTitle">{DATA.aboutTitle}</h2>
           <p className="m" id="aText">{DATA.about}</p>
-        </div>
-        <div className="statsRow rv" id="statsRow" style={{ '--d': '.08s' }} ref={statsRef}>
+        </Reveal>
+        <Reveal className="statsRow" id="statsRow" delay={80} ref={statsRef}>
           {(DATA.stats || []).map((item, i) => (
             <Stat key={i} item={item} start={statsIn} />
           ))}
-        </div>
+        </Reveal>
         <div className="fct">
           {Object.entries(DATA.aboutFacts || {}).map(([key, value], i) => (
-            <div className="fCard rv" key={key} style={{ '--d': `${i * 0.08}s` }}>
+            <Reveal className="fCard" key={key} delay={i * 80}>
               <b>{key}</b>
               <span>{value}</span>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
